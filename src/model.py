@@ -10,89 +10,60 @@ __updated__ = Sun Mar 30 2025
 """
 
 import pandas as pd
-
-DATA = {
-    "State": [
-        "California",
-        "Texas",
-        "Florida",
-        "New York",
-        "Pennsylvania",
-        "Illinois",
-        "Ohio",
-        "Georgia",
-        "North Carolina",
-        "Michigan",
-        "New Jersey",
-        "Virginia",
-        "Washington",
-        "Arizona",
-        "Massachusetts",
-        "Tennessee",
-        "Indiana",
-        "Maryland",
-        "Colorado",
-        "Wisconsin",
-    ],
-    "Population": [
-        39538223,
-        29145505,
-        21538187,
-        20201249,
-        13002700,
-        12812508,
-        11799448,
-        10711908,
-        10439388,
-        10077331,
-        9288994,
-        8631393,
-        7705281,
-        7151502,
-        7029917,
-        6910840,
-        6785528,
-        6177224,
-        5773714,
-        5893718,
-    ],
-    "Code": [
-        "CA",
-        "TX",
-        "FL",
-        "NY",
-        "PA",
-        "IL",
-        "OH",
-        "GA",
-        "NC",
-        "MI",
-        "NJ",
-        "VA",
-        "WA",
-        "AZ",
-        "MA",
-        "TN",
-        "IN",
-        "MD",
-        "CO",
-        "WI",
-    ],
-}
+from bs4 import BeautifulSoup
+from requests import get
 
 
 class Model:
-    def __init__(self):
+    def __init__(self, url, id):
+        self.datasource = url
+        self.identifier = id
+
         self.data = self._load_data()
 
     def _load_data(self):
-        """Load and return the population data"""
-        data = None
-        return pd.DataFrame(data or DATA)
+        try:
+            response = get(self.datasource).text
+            soup = BeautifulSoup(response, "html.parser")
+            datatable_raw = soup.find("table", class_=self.identifier)
+
+            headers = self._get_headers(datatable_raw)
+            data = self._get_table_data(datatable_raw)
+
+            dataset = pd.DataFrame(data=data, columns=headers)
+            return dataset.set_index(headers[0])
+        except Exception as e:
+            print(f"Failed To Fetch Data: Error: {e}")
+            return None
+
+    def _get_headers(self, raw_table):
+        header_row = raw_table.find("tr")
+        if not header_row:
+            return []
+        headers = [header.text.strip() for header in header_row.find_all(["th", "td"])]
+        return headers
+
+    def _get_table_data(self, raw_table):
+        datarows = raw_table.find_all("tr")
+        datarows.pop(0)
+        data = []
+        for row in datarows:
+            row = [cell.text.strip() for cell in row.find_all(["th", "td"])]
+            data.append(row)
+        return data
 
     def years(self):
-        return [10, 10, 20, 30]
+        return self.data.index
 
     def get_filtered_data(self, min_population):
         """Return data filtered by minimum population"""
         return self.data[self.data["Population"] >= min_population * 1000000]
+
+
+if __name__ == "__main__":
+    DATASOURCE_URL = "https://en.wikipedia.org/wiki/List_of_FIFA_World_Cup_finals"
+    TABLE_ID = "plainrowheaders"
+
+    model = Model(DATASOURCE_URL, TABLE_ID)
+    print(model.data)
+    print(model.years())
