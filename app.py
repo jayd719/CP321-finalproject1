@@ -7,7 +7,9 @@ import os
 
 
 app = dash.Dash(
-    __name__, external_scripts=JS_SCRIPTS, external_stylesheets=SYTLE_SHEETS
+    __name__,
+    external_scripts=JS_SCRIPTS,
+    external_stylesheets=SYTLE_SHEETS,
 )
 
 # Initialize MVC components
@@ -23,4 +25,4 @@ application = app.server
 
 if __name__ == "__main__":
     print("HELLO")
-    app.run()
+    app.run(debug=True)
