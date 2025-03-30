@@ -9,7 +9,6 @@ __updated__ = Sun Mar 30 2025
 -------------------------------------------------------
 """
 
-import plotly.express as px
 from dash import Input, Output
 
 
