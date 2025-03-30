@@ -1,8 +1,13 @@
 from dash import dcc, html
 
 
-class FifaView:
+class View:
+
     def __init__(self):
+        self.title = "FIFA Soccer World Cup"
+        self.subtitle = "Winners and Runner-ups from 1930 to 2022"
+        self.footerText = "Data sourced from Wikipedia. Last updated: 2023"
+
         self.layout = self._create_layout()
 
     def _create_layout(self):
@@ -10,7 +15,7 @@ class FifaView:
         return html.Div(
             className="",
             children=[
-                html.H1("US State Population Explorer", style={"textAlign": "center"}),
+                self._create_header(),
                 html.Div(
                     className="container mx-auto",
                     children=[
@@ -22,7 +27,31 @@ class FifaView:
                 ),
                 dcc.Graph(id="choropleth-map"),
                 html.Div(id="state-info", style={"marginTop": 20, "padding": "10px"}),
+                self._create_footer(),
             ],
+        )
+
+    def _create_header(self):
+        return html.Div(
+            children=[
+                html.H1(
+                    children=self.title,
+                    className="font-title relative z-2 text-3xl leading-none font-black text-primary",
+                ),
+                html.Span(
+                    id="data-output",
+                    className="text-lg text-gray-600",
+                    children=self.subtitle,
+                ),
+                html.Hr(className="my-3"),
+            ],
+            className="my-10 container mx-auto",
+        )
+
+    def _create_footer(self):
+        return html.Div(
+            className="mt-16 mb-5 text-center text-gray-500",
+            children=[html.Span(className="", children=self.footerText)],
         )
 
     def _create_controls_column1(self):

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA World Cup Winners Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-blue-800 mb-2">FIFA World Cup History</h1>
+            <p class="text-lg text-gray-600">Winners and Runner-ups from 1930 to 2022</p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Winners Card -->
+            <div class="card bg-white shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title text-2xl font-bold text-green-700 mb-6">World Cup Winners</h2>
+                    <div class="overflow-x-auto">
+                        <table class="table table-zebra">
+                            <thead>
+                                <tr class="text-gray-700">
+                                    <th>Year</th>
+                                    <th>Host</th>
+                                    <th>Winner</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2022</td>
+                                    <td>Qatar</td>
+                                    <td class="font-semibold">Argentina</td>
+                                    <td>3-3 (4-2 pens)</td>
+                                </tr>
+                                <tr>
+                                    <td>2018</td>
+                                    <td>Russia</td>
+                                    <td class="font-semibold">France</td>
+                                    <td>4-2</td>
+                                </tr>
+                                <tr>
+                                    <td>2014</td>
+                                    <td>Brazil</td>
+                                    <td class="font-semibold">Germany</td>
+                                    <td>1-0</td>
+                                </tr>
+                                <tr>
+                                    <td>2010</td>
+                                    <td>South Africa</td>
+                                    <td class="font-semibold">Spain</td>
+                                    <td>1-0</td>
+                                </tr>
+                                <tr>
+                                    <td>2006</td>
+                                    <td>Germany</td>
+                                    <td class="font-semibold">Italy</td>
+                                    <td>1-1 (5-3 pens)</td>
+                                </tr>
+                                <tr>
+                                    <td>2002</td>
+                                    <td>South Korea/Japan</td>
+                                    <td class="font-semibold">Brazil</td>
+                                    <td>2-0</td>
+                                </tr>
+                                <tr>
+                                    <td>1998</td>
+                                    <td>France</td>
+                                    <td class="font-semibold">France</td>
+                                    <td>3-0</td>
+                                </tr>
+                                <!-- More rows can be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Runner-ups Card -->
+            <div class="card bg-white shadow-xl">
+                <div class="card-body">
+                    <h2 class="card-title text-2xl font-bold text-red-700 mb-6">World Cup Runner-ups</h2>
+                    <div class="overflow-x-auto">
+                        <table class="table table-zebra">
+                            <thead>
+                                <tr class="text-gray-700">
+                                    <th>Year</th>
+                                    <th>Runner-up</th>
+                                    <th>Score</th>
+                                    <th>Venue</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2022</td>
+                                    <td class="font-semibold">France</td>
+                                    <td>3-3 (4-2 pens)</td>
+                                    <td>Lusail Stadium</td>
+                                </tr>
+                                <tr>
+                                    <td>2018</td>
+                                    <td class="font-semibold">Croatia</td>
+                                    <td>4-2</td>
+                                    <td>Luzhniki Stadium</td>
+                                </tr>
+                                <tr>
+                                    <td>2014</td>
+                                    <td class="font-semibold">Argentina</td>
+                                    <td>1-0</td>
+                                    <td>Maracanã Stadium</td>
+                                </tr>
+                                <tr>
+                                    <td>2010</td>
+                                    <td class="font-semibold">Netherlands</td>
+                                    <td>1-0</td>
+                                    <td>Soccer City</td>
+                                </tr>
+                                <tr>
+                                    <td>2006</td>
+                                    <td class="font-semibold">France</td>
+                                    <td>1-1 (5-3 pens)</td>
+                                    <td>Olympiastadion</td>
+                                </tr>
+                                <tr>
+                                    <td>2002</td>
+                                    <td class="font-semibold">Germany</td>
+                                    <td>2-0</td>
+                                    <td>International Stadium</td>
+                                </tr>
+                                <tr>
+                                    <td>1998</td>
+                                    <td class="font-semibold">Brazil</td>
+                                    <td>3-0</td>
+                                    <td>Stade de France</td>
+                                </tr>
+                                <!-- More rows can be added here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="mt-12">
+            <div class="stats shadow w-full bg-blue-600 text-white">
+                <div class="stat">
+                    <div class="stat-title text-blue-100">Total Tournaments</div>
+                    <div class="stat-value">22</div>
+                    <div class="stat-desc">1930 - 2022</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title text-blue-100">Most Wins</div>
+                    <div class="stat-value">Brazil</div>
+                    <div class="stat-desc">5 Titles</div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title text-blue-100">Most Finals</div>
+                    <div class="stat-value">Germany</div>
+                    <div class="stat-desc">8 Finals</div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-16 text-center text-gray-500">
+            <p>Data sourced from Wikipedia. Last updated: 2023</p>
+        </footer>
+    </div>
+</body>
+
+</html>

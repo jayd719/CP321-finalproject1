@@ -2,7 +2,7 @@ import plotly.express as px
 from dash import Input, Output
 
 
-class FifaController:
+class Controller:
     def __init__(self, app, model, view):
         self.app = app
         self.model = model

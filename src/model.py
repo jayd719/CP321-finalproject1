@@ -70,7 +70,7 @@ DATA = {
 }
 
 
-class FifaModel:
+class Model:
     def __init__(self):
         self.data = self._load_data()
 
