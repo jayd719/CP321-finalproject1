@@ -1,32 +1,36 @@
+"""-------------------------------------------------------
+CP321: Assignment 7- View.py
+-------------------------------------------------------
+Author:  JD
+ID:      169018282
+Uses:    pandas,numpy,plotly,dash
+Version:  1.0.8
+__updated__ = Sun Mar 30 2025
+-------------------------------------------------------
+"""
+
 from dash import dcc, html
+import dash_daq as daq
 
 
 class View:
-
-    def __init__(self):
+    def __init__(
+        self,
+    ):
+        # CONSTANTS
         self.title = "FIFA Soccer World Cup"
         self.subtitle = "Winners and Runner-ups from 1930 to 2022"
         self.footerText = "Data sourced from Wikipedia. Last updated: 2023"
+        self.years = []
 
-        self.layout = self._create_layout()
-
-    def _create_layout(self):
-        """Create and return the app layout"""
+    def create_layout(self, years):
+        self.years = years
         return html.Div(
             className="",
             children=[
                 self._create_header(),
-                html.Div(
-                    className="container mx-auto",
-                    children=[
-                        self._create_controls_column1(),
-                        self._create_controls_column2(),
-                        self._create_controls_column3(),
-                    ],
-                    style={"borderBottom": "thin lightgrey solid", "padding": "10px"},
-                ),
+                self._create_controls(),
                 dcc.Graph(id="choropleth-map"),
-                html.Div(id="state-info", style={"marginTop": 20, "padding": "10px"}),
                 self._create_footer(),
             ],
         )
@@ -36,7 +40,7 @@ class View:
             children=[
                 html.H1(
                     children=self.title,
-                    className="font-title relative z-2 text-3xl leading-none font-black text-primary",
+                    className="text-4xl font-bold text-blue-800 mb-2",
                 ),
                 html.Span(
                     id="data-output",
@@ -54,74 +58,30 @@ class View:
             children=[html.Span(className="", children=self.footerText)],
         )
 
-    def _create_controls_column1(self):
-        """Create color scale dropdown"""
+    def _create_controls(self):
         return html.Div(
-            [
-                html.Label("Select Color Scale:"),
-                dcc.Dropdown(
-                    id="color-scale",
-                    options=[
-                        {"label": "Viridis", "value": "Viridis"},
-                        {"label": "Plasma", "value": "Plasma"},
-                        {"label": "Rainbow", "value": "Rainbow"},
-                        {"label": "Electric", "value": "Electric"},
-                        {"label": "Hot", "value": "Hot"},
-                    ],
-                    value="Viridis",
-                    clearable=False,
-                ),
+            className="container mx-auto mb-5 grid grid-cols-3 gap-10",
+            children=[
+                self._create_dropdown_one(),
+                daq.BooleanSwitch(on=True, label="Label", labelPosition="top"),
+                self._create_years_dropdown(),
             ],
-            style={"width": "30%", "display": "inline-block", "padding": "10px"},
         )
 
-    def _create_controls_column2(self):
-        """Create scope radio buttons"""
-        return html.Div(
-            [
-                html.Label("Map Scope:"),
-                dcc.RadioItems(
-                    id="scope",
-                    options=[
-                        {"label": "USA", "value": "usa"},
-                        {"label": "North America", "value": "north america"},
-                    ],
-                    value="usa",
-                    inline=True,
-                ),
-            ],
-            style={"width": "30%", "display": "inline-block", "padding": "10px"},
+    def _create_dropdown_one(self):
+        return dcc.Dropdown(
+            id="controls-task-1",
+            className="",
+            options=["Winner", "Runner-ups", "Host"],
+            value="Winner",
+            clearable=False,
         )
 
-    def _create_controls_column3(self):
-        """Create population slider"""
-        return html.Div(
-            [
-                html.Label("Minimum Population (millions):"),
-                dcc.Slider(
-                    id="pop-slider",
-                    min=5,
-                    max=40,
-                    step=1,
-                    value=5,
-                    marks={i: str(i) for i in range(5, 41, 5)},
-                ),
-            ],
-            style={"width": "35%", "display": "inline-block", "padding": "10px"},
-        )
-
-    def create_state_info(self, click_data):
-        """Create state information display"""
-        if click_data is None:
-            return "Click on a state to see more details"
-
-        state = click_data["points"][0]["hovertext"]
-        population = click_data["points"][0]["customdata"][0]
-
-        return html.Div(
-            [
-                html.H3(f"{state}"),
-                html.P(f"Population: {population:,}"),
-                html.P(f"State Code: {click_data['points'][0]['location']}"),
-            ]
+    def _create_years_dropdown(self):
+        return dcc.Dropdown(
+            id="controls-year",
+            className="",
+            options=self.years,
+            value="",
+            placeholder="Select An Year",
         )

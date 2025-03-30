@@ -11,16 +11,10 @@ app = dash.Dash(
     external_scripts=JS_SCRIPTS,
     external_stylesheets=SYTLE_SHEETS,
 )
-
 model = Model()
 view = View()
-
-app.layout = view.layout
-
 Controller(app, model, view)
-
 application = app.server
 
 if __name__ == "__main__":
-    print("HELLO")
     app.run(debug=True)

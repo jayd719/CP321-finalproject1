@@ -1,3 +1,14 @@
+"""-------------------------------------------------------
+CP321: Assignment 7 - Controller.py
+-------------------------------------------------------
+Author:  JD
+ID:      169018282
+Uses:    pandas,numpy,plotly,dash
+Version:  1.0.8
+__updated__ = Sun Mar 30 2025
+-------------------------------------------------------
+"""
+
 import plotly.express as px
 from dash import Input, Output
 
@@ -8,7 +19,8 @@ class Controller:
         self.model = model
         self.view = view
 
-        self._register_callbacks()
+        self.app.layout = self.view.create_layout(self.model.years())
+        # self._register_callbacks()
 
     def _register_callbacks(self):
         """Register all Dash callbacks"""

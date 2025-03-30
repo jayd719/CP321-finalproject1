@@ -1,3 +1,14 @@
+"""-------------------------------------------------------
+CP321: Assignment 7- Model.py
+-------------------------------------------------------
+Author:  JD
+ID:      169018282
+Uses:    pandas,numpy,plotly,dash
+Version:  1.0.8
+__updated__ = Sun Mar 30 2025
+-------------------------------------------------------
+"""
+
 import pandas as pd
 
 DATA = {
@@ -78,6 +89,9 @@ class Model:
         """Load and return the population data"""
         data = None
         return pd.DataFrame(data or DATA)
+
+    def years(self):
+        return [10, 10, 20, 30]
 
     def get_filtered_data(self, min_population):
         """Return data filtered by minimum population"""
