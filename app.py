@@ -19,6 +19,7 @@ app.layout = view.layout
 
 FifaController(app, model, view)
 
+application = app.server
 
 if __name__ == "__main__":
     print("HELLO")
