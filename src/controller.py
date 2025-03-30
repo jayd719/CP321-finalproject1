@@ -39,7 +39,6 @@ class Controller:
                 fig = self.view.create_map_with_counts(df, filter_col)
             else:
                 fig = self.view.create_map(df, filter_col)
-
             return fig
 
         @self.app.callback(
@@ -48,4 +47,5 @@ class Controller:
             prevent_initial_call=True,
         )
         def update_map_year(year):
-            return {}
+            df = self.model.get_by_year(str(year))
+            return self.view.create_map_by_year(df, year)

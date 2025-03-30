@@ -33,7 +33,7 @@ class View:
             children=[
                 self._create_header(),
                 self._create_controls(),
-                dcc.Graph(id="output-map", figure={}),
+                dcc.Graph(id="output-map", figure={}, className=""),
                 self._create_footer(),
             ],
         )
@@ -109,7 +109,7 @@ class View:
                 "x": 0.5,
                 "font": dict(size=20, color="#333333"),
             },
-            margin=dict(l=20, r=20, t=80, b=20),
+            margin=dict(l=2, r=2, t=50, b=2),
             hoverlabel=dict(bgcolor="white", font_size=14, font_family="Arial"),
         )
         return fig
@@ -156,4 +156,19 @@ class View:
             },
         )
 
+        return fig
+
+    def create_map_by_year(self, df, year):
+        title = f"Winners, Runner-Up and Host For Year {year}"
+        fig = px.choropleth(
+            df,
+            locations="Country",
+            locationmode="country names",
+            color="Category",
+            hover_name="Country",
+            projection="natural earth",
+            height=600,
+        )
+
+        fig = self._update_common(fig, title)
         return fig
