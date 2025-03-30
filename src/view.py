@@ -32,7 +32,7 @@ class View:
             children=[
                 self._create_header(),
                 self._create_controls(),
-                dcc.Graph(id="choropleth-map"),
+                dcc.Graph(id="output-map", figure={}),
                 self._create_footer(),
             ],
         )

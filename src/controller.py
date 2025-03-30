@@ -19,16 +19,16 @@ class Controller:
         self.model = model
         self.view = view
 
-        self.view.footerText = "Data sourced from Wikipedia. Last updated: 2023"
+        self.view.footerText = "Data sourced from Wikipedia. Last updated: 2025"
 
         self.app.layout = self.view.create_layout(self.model.years())
-        # self._register_callbacks()
+        self._register_callbacks()
 
     def _register_callbacks(self):
         """Register all Dash callbacks"""
 
         @self.app.callback(
-            Output("choropleth-map", "figure"),
+            Output("outputmap", "figure"),
             [
                 Input("color-scale", "value"),
                 Input("scope", "value"),
@@ -61,9 +61,3 @@ class Controller:
             )
 
             return fig
-
-        @self.app.callback(
-            Output("state-info", "children"), [Input("choropleth-map", "clickData")]
-        )
-        def display_click_data(click_data):
-            return self.view.create_state_info(click_data)

@@ -36,6 +36,7 @@ class Model:
             dataset["Host"] = dataset["Location"].apply(
                 lambda cell: (cell.split(",")[1]).strip()
             )
+            dataset = dataset.iloc[:-1, :]
 
             return dataset.set_index(headers[0])
         except Exception as e:
