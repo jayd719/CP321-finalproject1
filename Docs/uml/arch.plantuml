@@ -1,0 +1,35 @@
+@startuml DetailedChoroplethMVC
+
+class Model {
+  + data: DataFrame
+  + __init__()
+  + _load_data()
+  + get_filtered_data()
+}
+
+class View {
+  + layout
+  + __init__()
+  + _create_layout()
+  + _create_controls_*()
+  + create_state_info()
+}
+
+class Controller {
+  + __init__(app, model, view)
+  + _register_callbacks()
+}
+
+class DashApp {
+  + __init__()
+  + run_server()
+}
+
+Model "1" --> "1" Controller : updates >
+View "1" --> "1" Controller : events >
+Controller "1" --> "1" Model : requests >
+Controller "1" --> "1" View : updates >
+DashApp "1" *-- "1" View : contains
+DashApp "1" *-- "1" Controller : contains
+
+@enduml
