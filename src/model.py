@@ -64,7 +64,8 @@ class Model:
 
     def get_counts(self, col="Winners"):
         df = self.data[col].value_counts().reset_index()
-        df.columns = ["Country", "Count"]
+        df.columns = ["Country", col]
+        df = df.sort_values(col, ascending=False)
         return df
 
     def get_by_year(self, year):

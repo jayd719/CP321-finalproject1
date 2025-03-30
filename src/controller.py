@@ -21,43 +21,30 @@ class Controller:
 
         self.view.footerText = "Data sourced from Wikipedia. Last updated: 2025"
 
-        self.app.layout = self.view.create_layout(self.model.years())
+        self.app.layout = self.view.create_layout(self.model.get_years())
         self._register_callbacks()
 
     def _register_callbacks(self):
         """Register all Dash callbacks"""
 
         @self.app.callback(
-            Output("outputmap", "figure"),
-            [
-                Input("color-scale", "value"),
-                Input("scope", "value"),
-                Input("pop-slider", "value"),
-            ],
+            Output("output-map", "figure"),
+            Input("controls-task-1", "value"),
+            Input("count-checkbox", "value"),
         )
-        def update_map(color_scale, scope, min_pop):
-            filtered_df = self.model.get_filtered_data(min_pop)
+        def update_map(filter_col, checkbox):
+            df = self.model.get_counts(filter_col)
 
-            fig = px.choropleth(
-                filtered_df,
-                locations="Code",
-                locationmode="USA-states",
-                color="Population",
-                scope=scope,
-                color_continuous_scale=color_scale,
-                title=f"US States with Population ≥ {min_pop} Million",
-                hover_name="State",
-                hover_data={"Code": False, "Population": ":,f"},
-                range_color=[
-                    filtered_df["Population"].min(),
-                    filtered_df["Population"].max(),
-                ],
-            )
-
-            fig.update_layout(
-                margin={"r": 0, "t": 40, "l": 0, "b": 0},
-                geo=dict(bgcolor="rgba(0,0,0,0)"),
-                plot_bgcolor="rgba(0,0,0,0)",
-            )
+            if len(checkbox):
+                fig = self.view.create_map_with_counts(df, filter_col)
+            else:
+                fig = self.view.create_map(df, filter_col)
 
             return fig
+
+        @self.app.callback(
+            Output("output-map", "figure"),
+            Input("controls-task-1", "value"),
+        )
+        def update_map_year():
+            return None
