@@ -33,6 +33,9 @@ app = dash.Dash(
 
 model = Model(DATASOURCE_URL, TABLE_ID)
 view = View()
+
+app.title = view.title
+
 Controller(app, model, view)
 
 
