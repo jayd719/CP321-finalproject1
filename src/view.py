@@ -10,7 +10,7 @@ __updated__ = Sun Mar 30 2025
 """
 
 from dash import dcc, html
-import dash_daq as daq
+import dash_mantine_components as dmc
 
 
 class View:
@@ -19,12 +19,14 @@ class View:
     ):
         # CONSTANTS
         self.title = "FIFA Soccer World Cup"
-        self.subtitle = "Winners and Runner-ups from 1930 to 2022"
-        self.footerText = "Data sourced from Wikipedia. Last updated: 2023"
+        self.subtitle = ""
+        self.footerText = ""
         self.years = []
 
     def create_layout(self, years):
         self.years = years
+        self.subtitle = f"Winners and Runner-ups from {min(years)} to {max(years)}"
+
         return html.Div(
             className="",
             children=[
@@ -63,7 +65,7 @@ class View:
             className="container mx-auto mb-5 grid grid-cols-3 gap-10",
             children=[
                 self._create_dropdown_one(),
-                daq.BooleanSwitch(on=True, label="Label", labelPosition="top"),
+                self._create_count_control(),
                 self._create_years_dropdown(),
             ],
         )
@@ -84,4 +86,12 @@ class View:
             options=self.years,
             value="",
             placeholder="Select An Year",
+        )
+
+    def _create_count_control(self):
+        return dcc.Checklist(
+            id="single-checkbox",
+            className="flex gap-2 border border-gray-300 p-1 rounded text-gray-500",
+            options=[{"label": "Show Count", "value": "True"}],
+            value=[],
         )

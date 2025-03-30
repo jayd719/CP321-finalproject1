@@ -19,6 +19,8 @@ class Controller:
         self.model = model
         self.view = view
 
+        self.view.footerText = "Data sourced from Wikipedia. Last updated: 2023"
+
         self.app.layout = self.view.create_layout(self.model.years())
         # self._register_callbacks()
 
