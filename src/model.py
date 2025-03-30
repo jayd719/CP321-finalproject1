@@ -60,7 +60,9 @@ class Model:
         return data
 
     def get_years(self):
-        return self.data.index
+        years = list(self.data.index)
+        years.reverse()
+        return years
 
     def get_counts(self, col="Winners"):
         df = self.data[col].value_counts().reset_index()

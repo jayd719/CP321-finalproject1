@@ -29,6 +29,7 @@ class Controller:
 
         @self.app.callback(
             Output("output-map", "figure"),
+            Output("years-table", "data"),
             Input("controls-task-1", "value"),
             Input("count-checkbox", "value"),
         )
@@ -39,13 +40,17 @@ class Controller:
                 fig = self.view.create_map_with_counts(df, filter_col)
             else:
                 fig = self.view.create_map(df, filter_col)
-            return fig
+            return fig, None
 
         @self.app.callback(
             Output("output-map", "figure", allow_duplicate=True),
+            Output("years-table", "data", allow_duplicate=True),
             Input("controls-year", "value"),
             prevent_initial_call=True,
         )
         def update_map_year(year):
+            if not year:
+                return {}, None
             df = self.model.get_by_year(str(year))
-            return self.view.create_map_by_year(df, year)
+            fig = self.view.create_map_by_year(df, year)
+            return fig, df.to_dict("records")

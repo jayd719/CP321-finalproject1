@@ -9,8 +9,7 @@ __updated__ = Sun Mar 30 2025
 -------------------------------------------------------
 """
 
-from dash import dcc, html
-import dash_mantine_components as dmc
+from dash import dcc, html, dash_table
 import plotly.express as px
 
 
@@ -33,8 +32,17 @@ class View:
             children=[
                 self._create_header(),
                 self._create_controls(),
-                dcc.Graph(id="output-map", figure={}, className=""),
+                self._create_info_table(),
+                dcc.Graph(id="output-map", figure={}),
                 self._create_footer(),
+            ],
+        )
+
+    def _create_info_table(self):
+        return html.Div(
+            className="w-94 mx-auto",
+            children=[
+                dash_table.DataTable(id="years-table", data=None),
             ],
         )
 
