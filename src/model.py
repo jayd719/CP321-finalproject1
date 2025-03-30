@@ -69,7 +69,10 @@ class Model:
         return df
 
     def get_by_year(self, year):
-        filtered_df = self.data[self.data.index == year]
+        filtered_df = self.data[self.data.index == year].reset_index()
+        filtered_df = filtered_df[["Winners", "Runners-up", "Host"]].T
+        filtered_df = filtered_df.reset_index()
+        filtered_df.columns = ["Category", "Country"]
         return filtered_df
 
 

@@ -43,8 +43,9 @@ class Controller:
             return fig
 
         @self.app.callback(
-            Output("output-map", "figure"),
-            Input("controls-task-1", "value"),
+            Output("output-map", "figure", allow_duplicate=True),
+            Input("controls-year", "value"),
+            prevent_initial_call=True,
         )
-        def update_map_year():
-            return None
+        def update_map_year(year):
+            return {}
