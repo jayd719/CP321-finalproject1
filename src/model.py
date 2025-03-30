@@ -31,6 +31,12 @@ class Model:
             data = self._get_table_data(datatable_raw)
 
             dataset = pd.DataFrame(data=data, columns=headers)
+
+            # Change Location to Host, split the city
+            dataset["Host"] = dataset["Location"].apply(
+                lambda cell: (cell.split(",")[1]).strip()
+            )
+
             return dataset.set_index(headers[0])
         except Exception as e:
             print(f"Failed To Fetch Data: Error: {e}")
@@ -52,12 +58,17 @@ class Model:
             data.append(row)
         return data
 
-    def years(self):
+    def get_years(self):
         return self.data.index
 
-    def get_filtered_data(self, min_population):
-        """Return data filtered by minimum population"""
-        return self.data[self.data["Population"] >= min_population * 1000000]
+    def get_counts(self, col="Winners"):
+        df = self.data[col].value_counts().reset_index()
+        df.columns = ["Country", "Count"]
+        return df
+
+    def get_by_year(self, year):
+        filtered_df = self.data[self.data.index == year]
+        return filtered_df
 
 
 if __name__ == "__main__":
@@ -66,4 +77,19 @@ if __name__ == "__main__":
 
     model = Model(DATASOURCE_URL, TABLE_ID)
     print(model.data)
-    print(model.years())
+    print("\ntest Model.years")
+    print(model.get_years())
+    print("\ntest Model.getcounts(Winners)")
+    print(model.get_counts(col="Winners"))
+
+    print("\ntest Model.getcounts(Runners-up)")
+    print(model.get_counts(col="Runners-up"))
+
+    print("\ntest Model.getcounts(Host)")
+    print(model.get_counts(col="Host"))
+
+    print("\ntest Model.get_by_year(1986)")
+    print(model.get_by_year("1986"))
+
+    print("\ntest Model.get_by_year(2002)")
+    print(model.get_by_year("2002"))

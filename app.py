@@ -34,6 +34,8 @@ app = dash.Dash(
 model = Model(DATASOURCE_URL, TABLE_ID)
 view = View()
 Controller(app, model, view)
+
+
 application = app.server
 
 if __name__ == "__main__":
