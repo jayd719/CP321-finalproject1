@@ -80,7 +80,6 @@ class Model:
         return sorted(self.data[self.data.heir == 1].occupation_c.unique())
 
     def get_gender_distribution_by_field(self, field, province_list):
-
         temp_df = (
             self.data[self.data.heir == 1]
             .groupby(["geo", "occupation_c", "gender"], as_index=False)
@@ -89,3 +88,11 @@ class Model:
 
         temp_df = temp_df[temp_df.occupation_c == field]
         return temp_df[temp_df.geo.isin(province_list)]
+
+    def get_gender_distribution_arsc(self, field):
+        temp_df = (
+            self.data[self.data.heir == 1]
+            .groupby(["occupation_c", "gender"], as_index=False)
+            .value.sum()
+        )
+        return temp_df[temp_df.occupation_c == field]

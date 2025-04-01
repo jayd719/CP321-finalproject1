@@ -5,7 +5,7 @@ def add_tilte(fig, title):
     fig.update_layout(
         title=dict(
             text=title,
-            font=dict(size=20, family="Arial", color="#2a4978"),
+            font=dict(size=15, family="Arial", color="#2a4978"),
         )
     )
     return fig
@@ -56,7 +56,7 @@ def create_gender_distribution_plot(df, field):
             gridcolor="rgba(200, 200, 200, 0.3)",
         ),
         height=600,
-        margin=dict(l=50, r=50, t=80, b=100),
+        margin=dict(l=0, r=25, t=0, b=0),
     )
     fig.update_traces(
         textfont_size=10,
@@ -68,5 +68,30 @@ def create_gender_distribution_plot(df, field):
     )
 
     fig = add_horizontal_legend(fig)
-    fig = add_tilte(fig, f"<b>Gender Composition of  {field} Across Canada</b>")
+    # fig = add_tilte(fig, f"<b>Gender Composition of  {field} Across Units</b>")
+    return fig
+
+
+def create_gender_distribution_pie(df, field):
+    fig = px.pie(
+        df,
+        values="value",
+        names="gender",
+        color_discrete_sequence=px.colors.qualitative.Pastel2_r,
+        hole=0.5,
+        width=250,
+    )
+
+    # fig.update_layout(legend=dict(orientation="v"))
+    fig = add_horizontal_legend(fig)
+    fig.update_traces(
+        textposition="inside", textinfo="percent+label", insidetextfont=dict(size=12)
+    )
+
+    fig.update_layout(
+        uniformtext_minsize=12,
+        uniformtext_mode="hide",
+        margin=dict(l=10, r=10, t=10, b=10),
+    )
+
     return fig
