@@ -25,12 +25,18 @@ class View:
 
     def create_layout(self, years):
         self.years = years
-        self.subtitle = f"Winners and Runner-ups from {min(years)} to {max(years)}"
-
         return html.Div(
-            className="",
             children=[
-                self._create_header(),
+                html.Div(id="header"),
+                self._render_app(),
+                html.Div(id="footer"),
+            ],
+        )
+
+    def _render_app(self):
+        return html.Div(
+            className="pt-20",
+            children=[
                 self._create_controls(),
                 self._create_info_table(),
                 dcc.Graph(id="output-map", figure={}),
@@ -44,23 +50,6 @@ class View:
             children=[
                 dash_table.DataTable(id="years-table", data=None),
             ],
-        )
-
-    def _create_header(self):
-        return html.Div(
-            children=[
-                html.H1(
-                    children=self.title,
-                    className="text-4xl font-bold text-blue-800 mb-2",
-                ),
-                html.Span(
-                    id="data-output",
-                    className="text-lg text-gray-600",
-                    children=self.subtitle,
-                ),
-                html.Hr(className="my-3"),
-            ],
-            className="my-10 container mx-auto",
         )
 
     def _create_footer(self):
