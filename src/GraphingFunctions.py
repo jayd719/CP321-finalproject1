@@ -1,4 +1,5 @@
 import plotly.express as px
+import numpy as np
 
 
 def add_tilte(fig, title):
@@ -92,6 +93,39 @@ def create_gender_distribution_pie(df, field):
         uniformtext_minsize=12,
         uniformtext_mode="hide",
         margin=dict(l=10, r=10, t=10, b=10),
+    )
+
+    return fig
+
+
+def create_tree_map(df):
+    midpoint = np.median(df["value"])
+
+    fig = px.treemap(
+        df,
+        path=[px.Constant("Canada"), "geo", "occupation_c", "education_filtered"],
+        values="value",
+        color="occupation_c",
+        color_discrete_sequence=px.colors.qualitative.Pastel2_r,
+        color_continuous_midpoint=midpoint,
+        height=850,
+        template="plotly_white",
+    )
+
+    fig.update_layout(
+        margin=dict(t=0, l=0, r=0, b=0),
+        hoverlabel=dict(bgcolor="white", font_size=14, font_family="Helvetica"),
+        uniformtext=dict(minsize=10, mode="hide"),
+    )
+
+    fig.update_traces(
+        root_color="lightgrey",
+        textinfo="label+value+percent parent",
+        texttemplate="<b>%{label}</b><br>(%{percentParent:.1%})",
+        textposition="middle left",
+        marker=dict(line=dict(width=0.5, color="black")),
+        hovertemplate="<b>%{label}</b><br>Count: %{value:,}<br>%{percentParent:.1%} of parent<extra></extra>",
+        textfont_size=15,
     )
 
     return fig

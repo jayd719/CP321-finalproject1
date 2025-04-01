@@ -7,7 +7,7 @@ from .GraphingFunctions import (
 )
 
 
-class GenderDistribution:
+class EssentialSevericeDistribution:
     def __init__(self, model, app):
         self.model = model
         self.app = app

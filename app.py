@@ -15,6 +15,7 @@ import dash
 from dash import html
 from src.model import Model
 from src.GenderDistributionView import GenderDistribution
+from src.ManpowerDistribution import ManpowerDistribution
 from src.setup import *
 import os
 
@@ -31,6 +32,7 @@ app = dash.Dash(
 
 model = Model(DATASOURCE_URL)
 task02 = GenderDistribution(model, app)
+task03 = ManpowerDistribution(model, app)
 
 app.title = "CP321 Final Project"
 app.layout = [
@@ -39,7 +41,7 @@ app.layout = [
             html.Div(id="header"),
             html.Div(
                 className="pt-20",
-                children=[task02.layout],
+                children=[task02.layout, task03.layout],
             ),
             html.Div(id="footer"),
         ]

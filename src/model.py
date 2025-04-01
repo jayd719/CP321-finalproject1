@@ -12,6 +12,7 @@ __updated__ = Sun Mar 30 2025
 import pandas as pd
 import numpy as np
 
+pd.options.mode.chained_assignment = None
 REDUNDANT_COLS = [
     "DGUID",
     "Age (2)",
@@ -96,3 +97,29 @@ class Model:
             .value.sum()
         )
         return temp_df[temp_df.occupation_c == field]
+
+    def _get_list_of_engineering(self):
+        ENGINEERING_OCCUPATIONS = {
+            "electrical and electronics engineers",
+            "mechanical engineers",
+            "computer engineers",
+        }
+
+        occupations = self.data[self.data.heir == 5].occupation_c.unique()
+
+        essentail_cols = []
+        for occupation in occupations:
+            lower_occupation = occupation.lower()
+            if any(eng in lower_occupation for eng in ENGINEERING_OCCUPATIONS):
+                essentail_cols.append(occupation)
+        return essentail_cols
+
+    def _update_education(self, value):
+        if value == "Postsecondary certificate, diploma or degree":
+            return "With Postsecondary Education"
+        return "Without Postsecondary Education"
+
+    def get_engineering_df(self):
+        eng_df = self.data[self.data.occupation_c.isin(self._get_list_of_engineering())]
+        eng_df["education_filtered"] = eng_df["education"].apply(self._update_education)
+        return eng_df
