@@ -33,12 +33,20 @@ function load_static_content() {
                         <li><a><i class="fas fa-image mr-2 text-blue-500"></i> PNG</a></li>
                     </ul>
                 </div>
+
+
                 <div class="indicator">
                     <span class="indicator-item badge badge-primary badge-xs animate-pulse"></span>
-                    <button class="btn btn-sm btn-outline border-gray-300 hover:bg-gray-100">
-                        <i class="fas fa-bell"></i>
-                    </button>
-                </div>
+                    <div class="dropdown dropdown-left">
+                        <div tabindex="0" role="button" class="btn btn-sm">
+                             <i class="fas fa-bell"></i>    
+                        </div>
+                        <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                            <li><a href="/">Homepage</a></li>
+                            <li><a  href="https://jashandeep.co.uk" >Portfolio</a></li>
+                            <li><a href="#footer">About</a></li>
+                        </ul>
+                    </div>
                 
             </div>
         </div>`

@@ -42,7 +42,7 @@ class Model:
         self.data = self.data.drop(columns=REDUNDANT_COLS)
         self.data.columns = [
             "geo",
-            "gender",
+            "education",
             "major",
             "occupation",
             "gender",
@@ -51,7 +51,7 @@ class Model:
 
         self.data["gender"] = self.data.gender.apply(self._clean_gender_col)
         self.data["noc"] = self.data.occupation.apply(self._clean_noc_codes)
-        self.data["heir"] = self.data.occupation.apply(self._clean_hierarchy_num)
+        self.data["heir"] = self.data.noc.apply(self._clean_hierarchy_num)
         self.data["occupation_c"] = self.data.occupation.apply(self._clean_occupations)
 
     def _clean_gender_col(self, value):
@@ -74,4 +74,18 @@ class Model:
         return " ".join(value)
 
     def get_province_list(self):
-        return self.data.geo.unique()
+        return sorted(self.data.geo.unique())
+
+    def get_field_list(self):
+        return sorted(self.data[self.data.heir == 1].occupation_c.unique())
+
+    def get_gender_distribution_by_field(self, field, province_list):
+
+        temp_df = (
+            self.data[self.data.heir == 1]
+            .groupby(["geo", "occupation_c", "gender"], as_index=False)
+            .value.sum()
+        )
+
+        temp_df = temp_df[temp_df.occupation_c == field]
+        return temp_df[temp_df.geo.isin(province_list)]
