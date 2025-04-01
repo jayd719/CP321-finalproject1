@@ -20,8 +20,7 @@ import os
 
 
 # CONTANTS
-DATASOURCE_URL = "https://en.wikipedia.org/wiki/List_of_FIFA_World_Cup_finals"
-TABLE_ID = "plainrowheaders"
+DATASOURCE_URL = "/Users/jashan/Desktop/CP321-FinalProject/data/finalData.csv"
 
 
 app = dash.Dash(
@@ -31,10 +30,10 @@ app = dash.Dash(
 )
 
 
-model = Model(DATASOURCE_URL, TABLE_ID)
+model = Model(DATASOURCE_URL)
 view = View()
 
-app.title = view.title
+app.title = "CP321 Final Project"
 
 Controller(app, model, view)
 

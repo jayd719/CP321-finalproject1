@@ -10,93 +10,68 @@ __updated__ = Sun Mar 30 2025
 """
 
 import pandas as pd
-from bs4 import BeautifulSoup
-from requests import get
+import numpy as np
+
+REDUNDANT_COLS = [
+    "DGUID",
+    "Age (2)",
+    "UOM",
+    "UOM_ID",
+    "SCALAR_FACTOR",
+    "SCALAR_ID",
+    "STATUS",
+    "SYMBOL",
+    "TERMINATED",
+    "DECIMALS",
+    "VECTOR",
+    "REF_DATE",
+    "COORDINATE",
+]
 
 
 class Model:
-    def __init__(self, url, id):
-        self.datasource = url
-        self.identifier = id
-
+    def __init__(self, url):
+        self.url = url
         self.data = self._load_data()
+        self._preprocess_data()
 
     def _load_data(self):
-        try:
-            response = get(self.datasource).text
-            soup = BeautifulSoup(response, "html.parser")
-            datatable_raw = soup.find("table", class_=self.identifier)
+        return pd.read_csv(self.url)
 
-            headers = self._get_headers(datatable_raw)
-            data = self._get_table_data(datatable_raw)
+    def _preprocess_data(self):
+        self.data = self.data.drop(columns=REDUNDANT_COLS)
+        self.data.columns = [
+            "geo",
+            "gender",
+            "major",
+            "occupation",
+            "gender",
+            "value",
+        ]
 
-            dataset = pd.DataFrame(data=data, columns=headers)
+        self.data["gender"] = self.data.gender.apply(self._clean_gender_col)
+        self.data["noc"] = self.data.occupation.apply(self._clean_noc_codes)
+        self.data["heir"] = self.data.occupation.apply(self._clean_hierarchy_num)
+        self.data["occupation_c"] = self.data.occupation.apply(self._clean_occupations)
 
-            # Change Location to Host, split the city
-            dataset["Host"] = dataset["Location"].apply(
-                lambda cell: (cell.split(",")[1]).strip()
-            )
-            dataset = dataset.iloc[:-1, :]
+    def _clean_gender_col(self, value):
+        return value[:-1]
 
-            return dataset.set_index(headers[0])
-        except Exception as e:
-            print(f"Failed To Fetch Data: Error: {e}")
-            return None
+    def _clean_noc_codes(self, value):
+        noc = value.split(" ")[0]
+        if not noc.isdigit():
+            return np.nan
+        return noc
 
-    def _get_headers(self, raw_table):
-        header_row = raw_table.find("tr")
-        if not header_row:
-            return []
-        headers = [header.text.strip() for header in header_row.find_all(["th", "td"])]
-        return headers
+    def _clean_hierarchy_num(self, value):
+        if type(value) is float:
+            return 0
+        return len(value)
 
-    def _get_table_data(self, raw_table):
-        datarows = raw_table.find_all("tr")
-        datarows.pop(0)
-        data = []
-        for row in datarows:
-            row = [cell.text.strip() for cell in row.find_all(["th", "td"])]
-            data.append(row)
-        return data
+    def _clean_occupations(self, value):
+        value = value.split(" ")
+        value.pop(0)
+        return " ".join(value)
 
-    def get_years(self):
-        years = list(self.data.index)
-        years.reverse()
-        return years
-
-    def get_counts(self, col="Winners"):
-        df = self.data[col].value_counts().reset_index()
-        df.columns = ["Country", col]
-        df = df.sort_values(col, ascending=False)
-        return df
-
-    def get_by_year(self, year):
-        filtered_df = self.data[self.data.index == year].reset_index()
-        filtered_df = filtered_df[["Winners", "Runners-up", "Host"]].T
-        filtered_df = filtered_df.reset_index()
-        filtered_df.columns = ["Category", "Country"]
-        return filtered_df
-
-
-if __name__ == "__main__":
-    DATASOURCE_URL = "https://en.wikipedia.org/wiki/List_of_FIFA_World_Cup_finals"
-    TABLE_ID = "plainrowheaders"
-
-    model = Model(DATASOURCE_URL, TABLE_ID)
-    print(model.data)
-    print("\ntest Model.years")
-    print(model.get_years())
-    print("\ntest Model.getcounts(Winners)")
-    print(model.get_counts(col="Winners"))
-
-    print("\ntest Model.getcounts(Runners-up)")
-    print(model.get_counts(col="Runners-up"))
-
-    print("\ntest Model.getcounts(Host)")
-    print(model.get_counts(col="Host"))
-
-    print("\ntest Model.get_by_year(1986)")
-    print(model.get_by_year("1986"))
-
-    print("\ntest Model.get_by_year(2002)")
-    print(model.get_by_year("2002"))
+    def get_province_list(self):
+        return self.data.geo.unique()
