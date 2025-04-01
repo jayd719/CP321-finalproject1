@@ -1,7 +1,7 @@
 function load_static_content() {
     const header = document.getElementById("header")
     const footer = document.getElementById("footer")
-    document.body.className = "bg-base-300"
+    document.body.className = "bg-base-100"
     header.className = "navbar bg-base-200 shadow-sm fixed z-10"
     header.innerHTML = `
         <div class="navbar-start">
