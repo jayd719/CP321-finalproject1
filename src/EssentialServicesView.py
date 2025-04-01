@@ -1,10 +1,7 @@
 from dash import dcc, html
 from random import randint
-from dash import Input, Output
-from .GraphingFunctions import (
-    create_gender_distribution_plot,
-    create_gender_distribution_pie,
-)
+from dash import Input, Output, ctx
+from .GraphingFunctions import create_polar_essentails
 
 
 class EssentialSevericeDistribution:
@@ -17,99 +14,47 @@ class EssentialSevericeDistribution:
 
     def _create_layout(self):
         return html.Div(
-            className="bg-base-300 container mx-auto rounded-xl p-8 shadow-md hover-scale",
+            className="bg-base-200 container mx-auto rounded-xl p-8 shadow-xl hover-scale mb-10",
             children=[
-                self._render_field_selector(),
                 html.Div(
                     className="grid grid-cols-1 lg:grid-cols-4 gap-5",
-                    children=[self._render_bar_chart(), self._render_pie_chart()],
+                    children=[
+                        self._render_buttons(),
+                        self._render_distribution_chart(),
+                    ],
                 ),
             ],
         )
 
-    def _render_bar_chart(self):
-        return html.Div(
-            className="grid gap-5 col-span-3 border p-4 border-gray-300 rounded-xl bg-base-100",
-            children=[
-                html.H2(
-                    id="gender-bar-chart-header",
-                    className="text-xl font-medium text-gray-700",
-                    children="dddd",
-                ),
-                dcc.Graph(id="graph-gender-distribution", className=""),
-                self._render_province_selector(),
-            ],
-        )
+    def _render_buttons(self):
+        children = []
+        for button in self.model.get_list_of_essential_occ():
+            button_id = button
+            children.append(
+                html.Button(
+                    id=button_id, className="btn btn-soft btn-primary", children=button
+                )
+            )
+        return html.Div(className="grid grid-cols-1", children=children)
 
-    def _render_pie_chart(self):
-        return html.Div(
-            className="pt-10 border p-4 border-gray-300 rounded-xl bg-base-100",
-            children=[
-                dcc.Graph(id="graph-gender-pie"),
-                html.H3(
-                    id="gender-pie-chart-header",
-                    className="label-text font-medium text-gray-700 text-center",
-                    children="dsf",
-                ),
-            ],
-        )
+    def _render_distribution_chart(self):
+        df = self.model.get_essentails_df_whole()
+        fig = create_polar_essentails(df)
 
-    def _render_field_selector(self):
-        feilds = self.model.get_field_list()
         return html.Div(
-            className="flex justify-between items-center mb-10 z-[2]",
+            className="pt-10 border p-4 border-gray-300 rounded-xl bg-base-100 col-span-3",
             children=[
-                html.H2(
-                    className="text-xl font-semibold text-gray-800",
-                    children="Gender Distribution by Field",
-                ),
-                dcc.Dropdown(
-                    id="field-selector",
-                    options=feilds,
-                    value=feilds[randint(0, len(feilds) - 1)],
-                    clearable=False,
-                    className="w-[500px]",
-                ),
-            ],
-        )
-
-    def _render_province_selector(self):
-        province_list = self.model.get_province_list()
-        return html.Div(
-            children=[
-                dcc.Dropdown(
-                    id="province-selector",
-                    value=province_list[:10],
-                    options=province_list,
-                    multi=True,
-                    clearable=False,
-                ),
+                dcc.Graph(id="essentials-chart", figure=fig),
             ],
         )
 
     def _register_callbacks(self):
 
         @self.app.callback(
-            [
-                Output("graph-gender-distribution", "figure"),
-                Output("graph-gender-pie", "figure"),
-                Output("gender-bar-chart-header", "children"),
-                Output("gender-pie-chart-header", "children"),
-            ],
-            [
-                Input("field-selector", "value"),
-                Input("province-selector", "value"),
-            ],
+            Output("essentials-chart", "figure"),
+            [Input(f"{i}", "n_clicks") for i in self.model.get_list_of_essential_occ()],
         )
-        def update_figure(field, province_list):
-            df_by_province = self.model.get_gender_distribution_by_field(
-                field, province_list
-            )
-            df_canada = self.model.get_gender_distribution_arsc(field)
-
-            fig1 = create_gender_distribution_plot(df_by_province, field)
-            fig2 = create_gender_distribution_pie(df_canada, field)
-
-            title_bar = f"Gender Composition of  {field} Across Units"
-            tiltle_pie = f"Gender Composition of  {field} Across Canada"
-            return fig1, fig2, title_bar, tiltle_pie
+        def hangle_click(*args):
+            if ctx.triggered_id:
+                print(ctx.triggered_id)
+            return None

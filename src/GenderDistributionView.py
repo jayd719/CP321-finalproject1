@@ -17,7 +17,7 @@ class GenderDistribution:
 
     def _create_layout(self):
         return html.Div(
-            className="bg-base-300 container mx-auto rounded-xl p-8 shadow-md hover-scale",
+            className="bg-base-200 container mx-auto rounded-xl p-8 shadow-xl hover-scale",
             children=[
                 self._render_field_selector(),
                 html.Div(

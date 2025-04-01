@@ -14,6 +14,7 @@ __updated__ = Sun Mar 30 2025
 import dash
 from dash import html
 from src.model import Model
+from src.EssentialServicesView import EssentialSevericeDistribution
 from src.GenderDistributionView import GenderDistribution
 from src.ManpowerDistribution import ManpowerDistribution
 from src.setup import *
@@ -31,6 +32,7 @@ app = dash.Dash(
 
 
 model = Model(DATASOURCE_URL)
+task01 = EssentialSevericeDistribution(model, app)
 task02 = GenderDistribution(model, app)
 task03 = ManpowerDistribution(model, app)
 
@@ -41,7 +43,11 @@ app.layout = [
             html.Div(id="header"),
             html.Div(
                 className="pt-20",
-                children=[task02.layout, task03.layout],
+                children=[
+                    task01.layout,
+                    task02.layout,
+                    task03.layout,
+                ],
             ),
             html.Div(id="footer"),
         ]

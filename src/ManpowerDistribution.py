@@ -13,14 +13,14 @@ class ManpowerDistribution:
         df = self.model.get_engineering_df()
         fig = create_tree_map(df)
         return html.Div(
-            className="bg-base-300 container mx-auto rounded-xl p-10 shadow-md hover-scale mt-10",
+            className="bg-base-200 container mx-auto rounded-xl p-10 shadow-xl hover-scale mt-10",
             children=[
                 html.H2(
-                    className="text-xl font-semibold text-gray-800",
+                    className="text-xl font-semibold text-gray-800 mb-5",
                     children="Manpower Analysis for EV Factory Location: Comparing Administrative Units",
                 ),
                 html.Div(
-                    className="grid p-10 rounded-xl",
+                    className="grid",
                     children=[
                         dcc.Graph(id="manpower-chart", figure=fig),
                     ],

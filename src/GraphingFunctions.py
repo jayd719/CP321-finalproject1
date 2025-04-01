@@ -129,3 +129,58 @@ def create_tree_map(df):
     )
 
     return fig
+
+
+def create_polar_essentails(df):
+    fig = px.line_polar(
+        df,
+        r="value",
+        theta="occupation_c",
+        color="geo",
+        color_discrete_sequence=px.colors.qualitative.Pastel2_r,
+        template="plotly_white",
+        labels={"value": "Count (log)", "occupation_c": "Occupation Category"},
+        hover_name="geo",
+        hover_data={"value": ":.2f"},
+        log_r=True,
+        start_angle=30,
+        line_close=True,
+        line_shape="spline",
+    )
+
+    fig.update_layout(
+        title=dict(
+            font=dict(size=22, family="Arial", color="#2a4978"),
+            x=0.5,
+            xanchor="center",
+        ),
+        font=dict(family="Arial", size=13, color="#333"),
+        polar=dict(
+            radialaxis=dict(
+                angle=45,
+                showline=True,
+                linewidth=2,
+                gridcolor="rgba(10,10,10,0.2)",
+                tickangle=0,
+            ),
+            angularaxis=dict(
+                linewidth=2,
+                gridcolor="rgba(10,10,10,0.2)",
+                tickfont=dict(size=12),
+            ),
+        ),
+        legend=dict(
+            orientation="h",
+            title=None,
+            y=-0.15,
+            x=0.5,
+            xanchor="center",
+            yanchor="bottom",
+            bordercolor="black",
+            borderwidth=1,
+            font=dict(size=12),
+        ),
+        margin=dict(l=0, r=0, t=0, b=0),
+    )
+
+    return fig

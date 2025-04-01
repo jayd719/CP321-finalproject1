@@ -98,15 +98,16 @@ class Model:
         )
         return temp_df[temp_df.occupation_c == field]
 
+    def _get_list_of_all_level_occupation(self, level=5):
+        return self.data[self.data.heir == level].occupation_c.unique()
+
     def _get_list_of_engineering(self):
         ENGINEERING_OCCUPATIONS = {
             "electrical and electronics engineers",
             "mechanical engineers",
             "computer engineers",
         }
-
-        occupations = self.data[self.data.heir == 5].occupation_c.unique()
-
+        occupations = self._get_list_of_all_level_occupation(5)
         essentail_cols = []
         for occupation in occupations:
             lower_occupation = occupation.lower()
@@ -123,3 +124,29 @@ class Model:
         eng_df = self.data[self.data.occupation_c.isin(self._get_list_of_engineering())]
         eng_df["education_filtered"] = eng_df["education"].apply(self._update_education)
         return eng_df
+
+    def get_list_of_essential_occ(self):
+        ESSENTIAL_OCCUPATIONS = {"nurse", "police", "fire"}
+        essentail_cols = []
+        occupations = self._get_list_of_all_level_occupation(5)
+        for occupation in occupations:
+            lower_occupation = occupation.lower()
+            if (
+                any(
+                    essential in lower_occupation for essential in ESSENTIAL_OCCUPATIONS
+                )
+                and "nursery" not in lower_occupation
+            ):
+                essentail_cols.append(occupation)
+        return essentail_cols
+
+    def get_essentails_df(self):
+        essential_df = self.data[
+            self.data.occupation_c.isin(self.get_list_of_essential_occ())
+        ]
+        return essential_df
+
+    def get_essentails_df_whole(self):
+        df = self.get_essentails_df()
+        df = df.groupby(["geo", "occupation_c"], as_index=False).value.sum()
+        return df
