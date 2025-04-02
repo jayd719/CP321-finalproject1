@@ -1,5 +1,6 @@
 from dash import dcc, html
 from .GraphingFunctions import create_tree_map
+from dash import Input, Output
 
 STAT_CSS = "card shadow-md rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-300"
 STAT_LABEL = "text-sm font-medium text-gray-500"
@@ -13,29 +14,20 @@ class GeneralAnalysis:
         self.app = app
         self.layout = self._create_layout()
         print(id(self.model))
+        self._register_callbacks()
 
     def _create_layout(self):
         return html.Div(
             className="container mx-auto mb-10",
-            children=[self._render_region_picker(), self._render_stats()],
+            children=[self._render_filter_section(), self._render_stats()],
         )
 
-    def _render_region_picker(self):
-        province_list = self.model.get_province_list()
+    def _render_filter_section(self):
         return html.Div(
-            className="container mx-auto card shadow-md rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-300 mb-4",
+            className="grid grid-cols-2 mx-auto card shadow-md rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-300 mb-4",
             children=[
-                html.Label(
-                    className="label-text font-medium text-gray-700 mb-2",
-                    children="Region",
-                ),
-                dcc.Dropdown(
-                    id="province-selector-an1",
-                    value=province_list[8],
-                    options=province_list,
-                    clearable=False,
-                    className="w-96",
-                ),
+                self._render_region_picker(),
+                self._render_education_filter(),
             ],
         )
 
@@ -79,7 +71,7 @@ class GeneralAnalysis:
                 ),
                 html.H3(
                     className=STAT_VAL,
-                    id="highest-field",
+                    id="highest-employe-field",
                     children="Legislative and senior management occupations",
                 ),
                 html.Label(
@@ -185,3 +177,68 @@ class GeneralAnalysis:
                 dcc.Graph(id="graph-employment-by-field"),
             ],
         )
+
+    def _render_region_picker(self):
+        province_list = self.model.get_province_list()
+        return html.Div(
+            className="z-[2] bg-white",
+            children=[
+                html.Label(
+                    className="label-text font-medium text-gray-700 mb-2 font-bold",
+                    children="Region",
+                ),
+                dcc.Dropdown(
+                    id="province-selector-an1",
+                    value=province_list[8],
+                    options=province_list,
+                    clearable=False,
+                    className="w-96",
+                ),
+            ],
+        )
+
+    def _render_education_filter(self):
+        return html.Div(
+            className="",
+            children=[
+                html.Label(
+                    className="label-text font-medium text-gray-700 mb-2 font-bold",
+                    children="Education Level",
+                ),
+                dcc.RadioItems(
+                    id="radio-education",
+                    options={
+                        "All": "All",
+                        "Post secondary certificate, diploma or degree": "Post secondary certificate, diploma or degree",
+                        "No Post secondary certificate, diploma or degree": "No Postsecondary certificate, diploma or degree",
+                    },
+                    value="All",
+                ),
+            ],
+        )
+
+    def _register_callbacks(self):
+
+        @self.app.callback(
+            [
+                Output("total-emp-stat", "children"),
+                Output("highest-employe-field", "children"),
+                Output("highest-employe-count", "children"),
+                Output("highest-male-field", "children"),
+                Output("highest-male-count", "children"),
+                Output("highest-female-field", "children"),
+                Output("highest-female-count", "children"),
+                Output("highest-sex-ratio-field", "children"),
+                Output("highest-sex-ratio-count", "children"),
+                Output("lowest-sex-ratio-field", "children"),
+                Output("lowest-sex-ratio-count", "children"),
+                Output("graph-employment-by-field", "figure"),
+            ],
+            [
+                Input("province-selector-an1", "value"),
+                Input("radio-education", "value"),
+            ],
+        )
+        def handle_region_change(region, education):
+
+            return (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {})
