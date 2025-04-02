@@ -1,6 +1,7 @@
 from dash import dcc, html
 from .GraphingFunctions import create_tree_map
 from dash import Input, Output
+from .model import Model
 
 STAT_CSS = "card shadow-md rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-300"
 STAT_LABEL = "text-sm font-medium text-gray-500"
@@ -9,7 +10,7 @@ STAT_COUNT = "text-sm mt-2 text-success"
 
 
 class GeneralAnalysis:
-    def __init__(self, model, app):
+    def __init__(self, model: Model, app):
         self.model = model
         self.app = app
         self.layout = self._create_layout()
@@ -246,8 +247,28 @@ class GeneralAnalysis:
                 df = self.model.filter_df_by_region_and_edu(region, education)
 
             total_emps = self.model.total_employes(df)
+
             (
                 hf,
                 hc,
-            ) = self.model.highest_and_lowest_field(df)
-            return (total_emps, hf, hc, 0, 0, 0, 0, 0, 0, 0, 0, {})
+            ) = Model.highest_and_lowest_field(df)
+
+            gender_data = Model.gender_analysis(df)
+            high_male_f, high_male_c = Model.feild_with_highest_male_emp(gender_data)
+            high_female_f, high_female_c = Model.feild_with_highest_female_emp(
+                gender_data
+            )
+            return (
+                total_emps,
+                hf,
+                f"{hc:,d}",
+                high_male_f,
+                f"{high_male_c:,d}",
+                high_female_f,
+                f"{high_female_c:,d}",
+                0,
+                0,
+                0,
+                0,
+                {},
+            )

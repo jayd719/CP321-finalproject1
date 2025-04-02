@@ -166,11 +166,31 @@ class Model:
     def total_employes(self, df):
         return f"{df.value.sum():,d}"
 
-    def highest_and_lowest_field(self, df: pd.DataFrame):
+    @staticmethod
+    def highest_and_lowest_field(df: pd.DataFrame):
         temp_df = df.groupby(["occupation_c"], as_index=False).value.sum()
         temp_df = temp_df.sort_values("value", ascending=False)
         highest = temp_df.iloc[0]
         return (
             highest["occupation_c"],
-            f"{highest['value']:,d}",
+            highest["value"],
         )
+
+    @staticmethod
+    def gender_analysis(df: pd.DataFrame):
+        temp_df = df.groupby(["occupation_c", "gender"], as_index=False).value.sum()
+        temp_df = temp_df.pivot(index="occupation_c", columns="gender", values="value")
+        temp_df["ratio"] = temp_df.Men / temp_df.Women
+        return temp_df
+
+    @staticmethod
+    def feild_with_highest_male_emp(df: pd.DataFrame):
+        df = df.sort_values(by="Men", ascending=False)
+        highest = df.iloc[0]
+        return highest.name, int(highest["Men"])
+
+    @staticmethod
+    def feild_with_highest_female_emp(df: pd.DataFrame):
+        df = df.sort_values(by="Women", ascending=False)
+        highest = df.iloc[0]
+        return highest.name, int(highest["Women"])
