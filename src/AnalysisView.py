@@ -254,21 +254,21 @@ class GeneralAnalysis:
             ) = Model.highest_and_lowest_field(df)
 
             gender_data = Model.gender_analysis(df)
-            high_male_f, high_male_c = Model.feild_with_highest_male_emp(gender_data)
-            high_female_f, high_female_c = Model.feild_with_highest_female_emp(
-                gender_data
-            )
+            h_male_f, h_male_c = Model.feild_highest_val(gender_data, "Men")
+            h_female_f, h_female_c = Model.feild_highest_val(gender_data, "Women")
+            h_ratio_f, h_ratio_v = Model.feild_highest_val(gender_data, "ratio")
+            l_ratio_f, l_ratio_v = Model.feild_highest_val(gender_data, "ratio", True)
             return (
                 total_emps,
                 hf,
                 f"{hc:,d}",
-                high_male_f,
-                f"{high_male_c:,d}",
-                high_female_f,
-                f"{high_female_c:,d}",
-                0,
-                0,
-                0,
-                0,
+                h_male_f,
+                f"{h_male_c:,d}",
+                h_female_f,
+                f"{h_female_c:,d}",
+                h_ratio_f,
+                h_ratio_v,
+                l_ratio_f,
+                l_ratio_v,
                 {},
             )

@@ -184,13 +184,7 @@ class Model:
         return temp_df
 
     @staticmethod
-    def feild_with_highest_male_emp(df: pd.DataFrame):
-        df = df.sort_values(by="Men", ascending=False)
+    def feild_highest_val(df: pd.DataFrame, col="Men", ascen=False):
+        df = df.sort_values(by=col, ascending=ascen)
         highest = df.iloc[0]
-        return highest.name, int(highest["Men"])
-
-    @staticmethod
-    def feild_with_highest_female_emp(df: pd.DataFrame):
-        df = df.sort_values(by="Women", ascending=False)
-        highest = df.iloc[0]
-        return highest.name, int(highest["Women"])
+        return highest.name, int(highest[col])
