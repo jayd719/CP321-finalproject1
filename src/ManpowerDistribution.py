@@ -13,7 +13,7 @@ class ManpowerDistribution:
         df = self.model.get_engineering_df()
         fig = create_tree_map(df)
         return html.Div(
-            className="bg-base-200 container mx-auto rounded-xl p-10 shadow-xl hover-scale mt-10",
+            className="container mx-auto card shadow-md rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-300",
             children=[
                 html.H2(
                     className="text-xl font-semibold text-gray-800 mb-5",

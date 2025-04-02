@@ -17,6 +17,7 @@ from src.model import Model
 from src.EssentialServicesView import EssentialSevericeDistribution
 from src.GenderDistributionView import GenderDistribution
 from src.ManpowerDistribution import ManpowerDistribution
+from src.AnalysisView import GeneralAnalysis
 from src.setup import *
 import os
 
@@ -35,6 +36,7 @@ model = Model(DATASOURCE_URL)
 task01 = EssentialSevericeDistribution(model, app)
 task02 = GenderDistribution(model, app)
 task03 = ManpowerDistribution(model, app)
+task04 = GeneralAnalysis(model, app)
 
 app.title = "CP321 Final Project"
 app.layout = [
@@ -44,6 +46,7 @@ app.layout = [
             html.Div(
                 className="pt-20",
                 children=[
+                    task04.layout,
                     task02.layout,
                     task01.layout,
                     task03.layout,

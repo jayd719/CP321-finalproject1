@@ -18,4 +18,5 @@ SYTLE_SHEETS = [
     "https://cdn.jsdelivr.net/npm/daisyui@5",
     "https://cdn.jsdelivr.net/npm/daisyui@5/themes.css",
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css",
+    # "https://cdn.jsdelivr.net/npm/daisyui@2.6.0/dist/full.css",
 ]
