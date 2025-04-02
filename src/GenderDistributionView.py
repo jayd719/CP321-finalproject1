@@ -21,7 +21,7 @@ class GenderDistribution:
             children=[
                 self._render_field_selector(),
                 html.Div(
-                    className="grid grid-cols-1 lg:grid-cols-4 gap-5",
+                    className="grid grid-cols-1 lg:grid-cols-3 gap-5",
                     children=[self._render_bar_chart(), self._render_pie_chart()],
                 ),
             ],
@@ -29,7 +29,7 @@ class GenderDistribution:
 
     def _render_bar_chart(self):
         return html.Div(
-            className="grid gap-5 col-span-3 border p-4 border-gray-300 rounded-xl bg-base-100",
+            className="grid gap-5 col-span-2 border p-4 border-gray-300 rounded-xl bg-base-100",
             children=[
                 html.H2(
                     id="gender-bar-chart-header",
@@ -57,7 +57,7 @@ class GenderDistribution:
     def _render_field_selector(self):
         feilds = self.model.get_field_list()
         return html.Div(
-            className="flex justify-between items-center mb-10 z-[2]",
+            className="lg:flex justify-between items-center mb-10 z-[2]",
             children=[
                 html.H2(
                     className="text-xl font-semibold text-gray-800",

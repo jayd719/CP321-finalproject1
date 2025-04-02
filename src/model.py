@@ -150,3 +150,8 @@ class Model:
         df = self.get_essentails_df()
         df = df.groupby(["geo", "occupation_c"], as_index=False).value.sum()
         return df
+
+    def get_essential_by_profession(self, profession):
+        df = df = self.get_essentails_df()
+        df = df[df.occupation_c == profession]
+        return df

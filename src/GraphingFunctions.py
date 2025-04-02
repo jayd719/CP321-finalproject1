@@ -80,7 +80,7 @@ def create_gender_distribution_pie(df, field):
         names="gender",
         color_discrete_sequence=px.colors.qualitative.Pastel2_r,
         hole=0.5,
-        width=250,
+        width=350,
     )
 
     # fig.update_layout(legend=dict(orientation="v"))
@@ -108,7 +108,7 @@ def create_tree_map(df):
         color="occupation_c",
         color_discrete_sequence=px.colors.qualitative.Pastel2_r,
         color_continuous_midpoint=midpoint,
-        height=850,
+        height=750,
         template="plotly_white",
     )
 
@@ -172,7 +172,7 @@ def create_polar_essentails(df):
         legend=dict(
             orientation="h",
             title=None,
-            y=-0.15,
+            y=-0.45,
             x=0.5,
             xanchor="center",
             yanchor="bottom",
@@ -180,7 +180,50 @@ def create_polar_essentails(df):
             borderwidth=1,
             font=dict(size=12),
         ),
-        margin=dict(l=0, r=0, t=0, b=0),
+        margin=dict(l=0, r=0, t=20, b=50),
+    )
+
+    return fig
+
+
+def create_essentials_pie(df):
+    fig = px.pie(
+        df,
+        values="value",
+        names="geo",
+        color_discrete_sequence=px.colors.qualitative.Pastel2_r,
+        hole=0.5,
+        labels={"value": "Count"},
+        template="plotly_white",
+    )
+
+    fig.update_layout(
+        font_family="Helvetica Neue",
+        margin=dict(t=10, b=10, l=10, r=10),
+        showlegend=True,
+        legend_title_text="Regions",
+        legend_font_size=12,
+        legend_title_font_size=14,
+    )
+
+    # fig = add_horizontal_legend(fig)
+
+    fig.update_traces(
+        textposition="inside",
+        textinfo="percent+label",
+        insidetextfont=dict(color="black", size=14, family="Arial"),
+        marker=dict(line=dict(color="white", width=2)),
+        hovertemplate="<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>",
+        pull=[0.1 if i == df["value"].idxmax() else 0.02 for i in range(len(df))],
+    )
+
+    fig.update_layout(
+        legend=dict(
+            orientation="v",
+        ),
+        legend_bordercolor="black",
+        legend_borderwidth=1,
+        margin=dict(l=10, r=0, t=20, b=50),
     )
 
     return fig
