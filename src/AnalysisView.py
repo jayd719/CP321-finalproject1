@@ -209,8 +209,8 @@ class GeneralAnalysis:
                     id="radio-education",
                     options={
                         "All": "All",
-                        "Post secondary certificate, diploma or degree": "Post secondary certificate, diploma or degree",
-                        "No Post secondary certificate, diploma or degree": "No Postsecondary certificate, diploma or degree",
+                        "With Postsecondary Education": "With Postsecondary Education",
+                        "Without Postsecondary Education": "Without Postsecondary Education",
                     },
                     value="All",
                 ),
@@ -240,5 +240,14 @@ class GeneralAnalysis:
             ],
         )
         def handle_region_change(region, education):
+            if education == "All":
+                df = self.model.filter_df_by_region_and_edu(region)
+            else:
+                df = self.model.filter_df_by_region_and_edu(region, education)
 
-            return (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, {})
+            total_emps = self.model.total_employes(df)
+            (
+                hf,
+                hc,
+            ) = self.model.highest_and_lowest_field(df)
+            return (total_emps, hf, hc, 0, 0, 0, 0, 0, 0, 0, 0, {})

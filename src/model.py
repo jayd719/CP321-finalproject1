@@ -54,6 +54,7 @@ class Model:
         self.data["noc"] = self.data.occupation.apply(self._clean_noc_codes)
         self.data["heir"] = self.data.noc.apply(self._clean_hierarchy_num)
         self.data["occupation_c"] = self.data.occupation.apply(self._clean_occupations)
+        self.data["education_up"] = self.data.education.apply(self._update_education)
 
     def _clean_gender_col(self, value):
         return value[:-1]
@@ -155,3 +156,21 @@ class Model:
         df = df = self.get_essentails_df()
         df = df[df.occupation_c == profession]
         return df
+
+    def filter_df_by_region_and_edu(self, region, education=None):
+        df = self.data[self.data.heir == 1]
+        if not education:
+            return df[df.geo == region]
+        return df[(df.geo == region) & (df.education_up == education)]
+
+    def total_employes(self, df):
+        return f"{df.value.sum():,d}"
+
+    def highest_and_lowest_field(self, df: pd.DataFrame):
+        temp_df = df.groupby(["occupation_c"], as_index=False).value.sum()
+        temp_df = temp_df.sort_values("value", ascending=False)
+        highest = temp_df.iloc[0]
+        return (
+            highest["occupation_c"],
+            f"{highest['value']:,d}",
+        )
