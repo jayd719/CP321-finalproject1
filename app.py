@@ -24,7 +24,7 @@ from src.setup import *
 import os
 
 # CONTANTS
-DATASOURCE_URL = "/Users/jashan/Desktop/CP321-FinalProject/data/finalData.csv"
+DATASOURCE_URL = "./data/finalData.csv"
 
 
 app = dash.Dash(
