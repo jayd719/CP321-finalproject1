@@ -1,10 +1,10 @@
 from dash import dcc, html
-from .GraphingFunctions import create_tree_map
 from dash import Input, Output
 from .model import Model
+from .GraphingFunctions import create_pie_chart
 
-STAT_CSS = "card shadow-md rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-300"
-STAT_LABEL = "text-sm font-medium text-gray-500"
+STAT_CSS = "card shadow-md hover:shadow-xl rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-100"
+STAT_LABEL = "text-sm font-bold text-primary mb-2"
 STAT_VAL = "text-2xl font-bold text-gray-800 mt-1"
 STAT_COUNT = "text-sm mt-2 text-success"
 
@@ -25,7 +25,7 @@ class GeneralAnalysis:
 
     def _render_filter_section(self):
         return html.Div(
-            className="grid grid-cols-2 mx-auto card shadow-md rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-300 mb-4",
+            className="grid grid-cols-2 mx-auto card shadow-md hover:shadow-xl rounded-2xl p-6 border border-gray-100 mb-4",
             children=[
                 self._render_region_picker(),
                 self._render_education_filter(),
@@ -140,7 +140,7 @@ class GeneralAnalysis:
                 ),
                 html.Label(
                     id="highest-sex-ratio-count",
-                    className=STAT_COUNT,
+                    className=STAT_COUNT + " hidden",
                     children="43,1234",
                 ),
             ],
@@ -161,7 +161,7 @@ class GeneralAnalysis:
                 ),
                 html.Label(
                     id="lowest-sex-ratio-count",
-                    className=STAT_COUNT,
+                    className=STAT_COUNT + " hidden",
                     children="43,1234",
                 ),
             ],
@@ -173,7 +173,7 @@ class GeneralAnalysis:
             children=[
                 html.Label(
                     className=STAT_LABEL,
-                    children="Regional Employment Trends",
+                    children="Regional Employment Distribution by Field",
                 ),
                 dcc.Graph(id="graph-employment-by-field"),
             ],
@@ -253,11 +253,12 @@ class GeneralAnalysis:
                 hc,
             ) = Model.highest_and_lowest_field(df)
 
+            fig = create_pie_chart(df)
             gender_data = Model.gender_analysis(df)
             h_male_f, h_male_c = Model.feild_highest_val(gender_data, "Men")
             h_female_f, h_female_c = Model.feild_highest_val(gender_data, "Women")
-            h_ratio_f, h_ratio_v = Model.feild_highest_val(gender_data, "ratio")
-            l_ratio_f, l_ratio_v = Model.feild_highest_val(gender_data, "ratio", True)
+            h_ratio_f, h_ratio_v = Model.feild_highest_val(gender_data, "ratio", True)
+            l_ratio_f, l_ratio_v = Model.feild_highest_val(gender_data, "ratio", False)
             return (
                 total_emps,
                 hf,
@@ -270,5 +271,5 @@ class GeneralAnalysis:
                 h_ratio_v,
                 l_ratio_f,
                 l_ratio_v,
-                {},
+                fig,
             )

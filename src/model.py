@@ -180,7 +180,7 @@ class Model:
     def gender_analysis(df: pd.DataFrame):
         temp_df = df.groupby(["occupation_c", "gender"], as_index=False).value.sum()
         temp_df = temp_df.pivot(index="occupation_c", columns="gender", values="value")
-        temp_df["ratio"] = temp_df.Men / temp_df.Women
+        temp_df["ratio"] = (temp_df.Men / temp_df.Women) * 100
         return temp_df
 
     @staticmethod

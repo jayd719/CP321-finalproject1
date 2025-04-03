@@ -14,12 +14,12 @@ class EssentialSevericeDistribution:
 
     def _create_layout(self):
         return html.Div(
-            className="container mx-auto card shadow-md rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-300 my-20",
+            className="container mx-auto card shadow-md hover:shadow-xl rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-100 my-20",
             children=[
                 html.Div(
                     children=[
                         html.H2(
-                            className="text-xl font-semibold text-gray-800 mb-5",
+                            className="text-xl font-bold mb-5 text-primary",
                             children="Distribution of Essential Service Human Resources Across Administrative Units",
                         ),
                         html.Div(
@@ -65,7 +65,7 @@ class EssentialSevericeDistribution:
             )
 
         return html.Div(
-            className="grid grid-cols-1 p-3 border p-4 border-gray-300 rounded-xl",
+            className="grid grid-cols-1 p-3 border p-4 border-gray-100 rounded-xl",
             children=children,
         )
 
@@ -74,7 +74,7 @@ class EssentialSevericeDistribution:
         # fig = create_polar_essentails(df)
         # title = "Distribution of Essential Service Human Resources Across Administrative Units"
         return html.Div(
-            className="border p-4 border-gray-300 rounded-xl bg-base-100 col-span-2",
+            className="border p-4 border-gray-100 rounded-xl bg-base-100 col-span-2",
             children=[
                 html.H3(
                     id="esstential-pie-title",

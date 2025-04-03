@@ -17,7 +17,7 @@ class GenderDistribution:
 
     def _create_layout(self):
         return html.Div(
-            className="container mx-auto card shadow-md rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-300 my-20",
+            className="container mx-auto card shadow-md hover:shadow-xl rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-100 my-20",
             children=[
                 self._render_field_selector(),
                 html.Div(
@@ -29,7 +29,7 @@ class GenderDistribution:
 
     def _render_bar_chart(self):
         return html.Div(
-            className="grid gap-5 col-span-2 border p-4 border-gray-300 rounded-xl bg-base-100",
+            className="grid gap-5 col-span-2 border p-4 border-gray-100 rounded-xl bg-base-100",
             children=[
                 html.H2(
                     id="gender-bar-chart-header",
@@ -43,7 +43,7 @@ class GenderDistribution:
 
     def _render_pie_chart(self):
         return html.Div(
-            className="pt-10 border p-4 border-gray-300 rounded-xl bg-base-100",
+            className="pt-10 border p-4 border-gray-100 rounded-xl bg-base-100",
             children=[
                 dcc.Graph(id="graph-gender-pie"),
                 html.H3(
@@ -60,7 +60,7 @@ class GenderDistribution:
             className="lg:flex justify-between items-center mb-10 z-[2]",
             children=[
                 html.H2(
-                    className="text-xl font-semibold text-gray-800",
+                    className="text-xl font-bold mb-2  text-primary",
                     children="Gender Distribution by Field",
                 ),
                 dcc.Dropdown(

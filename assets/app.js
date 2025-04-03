@@ -24,7 +24,7 @@ function load_static_content() {
         <div class="navbar-end px-5">
             <div class="flex items-center space-x-4 mt-4 md:mt-0">
                 <div class="dropdown dropdown-end">
-                    <label tabindex="0" class="btn btn-sm btn-outline border-gray-300 hover:bg-gray-100">
+                    <label tabindex="0" class="btn btn-sm btn-outline border-gray-100 hover:bg-gray-100">
                         <i class="fas fa-download mr-2"></i> Export
                     </label>
                     <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-white rounded-box w-40">
@@ -63,10 +63,9 @@ function load_static_content() {
                         <path d="M30 30 L70 30 L70 70 L30 70 Z" fill="white" />
                         <path d="M40 40 L60 40 L60 60 L40 60 Z" fill="var(--primary)" />
                     </svg>
-                    <span class="text-lg font-semibold">Education-Employment Analytics</span>
+                    <span class="text-lg font-semibold">Data Dashboard</span>
                 </div>
-                <p class="text-sm text-gray-600 mb-4">Advanced analytical tools powered by Statistics Canada's
-                    official data.</p>
+                <p class="text-sm text-gray-600 mb-4">Analytical tools powered by Statistics Canada's official data.</p>
                 <div class="flex space-x-4">
                     <a><i class="fab fa-twitter text-lg"></i></a>
                     <a><i class="fab fa-linkedin-in text-lg"></i></a>
@@ -75,21 +74,19 @@ function load_static_content() {
             </div>
             <div class="grid">
                 <h3 class="footer-title">Data Resources</h3>
-                <a class="link link-hover">Dataset Documentation</a>
+                <a href="https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=9810040401" class="link link-hover">Dataset</a>
                 <a class="link link-hover">API Access</a>
                 <a class="link link-hover">Methodology</a>
-                <a class="link link-hover">Release Calendar</a>
             </div>
             <div class="grid">
                 <h3 class="footer-title">Support</h3>
-                <a class="link link-hover">Help Center</a>
-                <a class="link link-hover">Training Webinars</a>
-                <a class="link link-hover">User Guides</a>
-                <a class="link link-hover">Contact Research Team</a>
+                <a href="mailto:sing8282@mylaurier.ca" class="link link-hover">Report a Issue</a>
+                <a href="mailto:sing8282@mylaurier.ca" class="link link-hover">User Guides</a>
+                <a href="mailto:sing8282@mylaurier.ca" class="link link-hover">Contact Team</a>
             </div>
             <div class="grid">
                 <h3 class="footer-title">Legal</h3>
-                <a class="link link-hover">Open Government License</a>
+                <a class="link link-hover">Cookie Policy</a>
                 <a class="link link-hover">Privacy Policy</a>
                 <a class="link link-hover">Accessibility</a>
                 <a class="link link-hover">Terms of Service</a>

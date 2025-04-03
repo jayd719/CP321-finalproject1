@@ -2,6 +2,9 @@ import plotly.express as px
 import numpy as np
 
 
+COLOR_PALLET = px.colors.qualitative.Bold
+
+
 def add_tilte(fig, title):
     fig.update_layout(
         title=dict(
@@ -37,7 +40,7 @@ def create_gender_distribution_plot(df, field):
         barmode="group",
         log_y=True,
         template="plotly_white",
-        color_discrete_sequence=px.colors.qualitative.Pastel2_r,
+        color_discrete_sequence=COLOR_PALLET,
     )
     fig.update_layout(xaxis={"categoryorder": "total descending"})
     fig.update_layout(
@@ -78,7 +81,7 @@ def create_gender_distribution_pie(df, field):
         df,
         values="value",
         names="gender",
-        color_discrete_sequence=px.colors.qualitative.Pastel2_r,
+        color_discrete_sequence=COLOR_PALLET,
         hole=0.5,
         width=350,
     )
@@ -106,7 +109,7 @@ def create_tree_map(df):
         path=[px.Constant("Canada"), "geo", "occupation_c", "education_filtered"],
         values="value",
         color="occupation_c",
-        color_discrete_sequence=px.colors.qualitative.Pastel2_r,
+        color_discrete_sequence=COLOR_PALLET,
         color_continuous_midpoint=midpoint,
         height=750,
         template="plotly_white",
@@ -137,7 +140,7 @@ def create_polar_essentails(df):
         r="value",
         theta="occupation_c",
         color="geo",
-        color_discrete_sequence=px.colors.qualitative.Pastel2_r,
+        color_discrete_sequence=COLOR_PALLET,
         template="plotly_white",
         labels={"value": "Count (log)", "occupation_c": "Occupation Category"},
         hover_name="geo",
@@ -191,7 +194,7 @@ def create_essentials_pie(df):
         df,
         values="value",
         names="geo",
-        color_discrete_sequence=px.colors.qualitative.Pastel2_r,
+        color_discrete_sequence=COLOR_PALLET,
         hole=0.5,
         labels={"value": "Count"},
         template="plotly_white",
@@ -224,6 +227,44 @@ def create_essentials_pie(df):
         legend_bordercolor="black",
         legend_borderwidth=1,
         margin=dict(l=10, r=0, t=20, b=50),
+    )
+
+    return fig
+
+
+def create_pie_chart(df, title: str = "Occupation Distribution"):
+
+    # Create figure
+    fig = px.pie(
+        df,
+        names="occupation_c",
+        values="value",
+        hole=0.75,
+        color_discrete_sequence=COLOR_PALLET,
+    )
+
+    # Configure layout
+    fig.update_layout(
+        margin=dict(t=10, b=10, l=10, r=10),
+        showlegend=True,
+        legend=dict(
+            font=dict(size=10),
+            orientation="v",
+            xanchor="left",
+        ),
+        legend_bordercolor="black",
+        legend_borderwidth=1,
+        hoverlabel=dict(bgcolor="white", font_size=12, font_family="Arial"),
+    )
+
+    # Configure traces
+    text_info = "percent+label"
+    fig.update_traces(
+        textposition="none",
+        textinfo=text_info,
+        hovertemplate="<b>%{label}</b><br>Value: %{value:,}<br>Percentage: %{percent}<extra></extra>",
+        textfont=dict(size=12),
+        marker=dict(line=dict(color="#FFFFFF", width=1)),
     )
 
     return fig

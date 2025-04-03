@@ -18,7 +18,9 @@ from src.EssentialServicesView import EssentialSevericeDistribution
 from src.GenderDistributionView import GenderDistribution
 from src.ManpowerDistribution import ManpowerDistribution
 from src.AnalysisView import GeneralAnalysis
+from src.components import render_dashboard_header
 from src.setup import *
+
 import os
 
 # CONTANTS
@@ -44,8 +46,9 @@ app.layout = [
         children=[
             html.Div(id="header"),
             html.Div(
-                className="pt-20",
+                className="pt-20 px-5",
                 children=[
+                    render_dashboard_header(),
                     task04.layout,
                     task02.layout,
                     task01.layout,
