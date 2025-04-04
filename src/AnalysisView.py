@@ -1,3 +1,14 @@
+"""-------------------------------------------------------
+CP321: Final Project AnalysisView.py
+-------------------------------------------------------
+Author:  JD
+ID:      169018282
+Uses:    pandas,numpy,plotly,dash
+Version:  1.0.8
+__updated__ = Sun Mar 30 2025
+-------------------------------------------------------
+"""
+
 from dash import dcc, html
 from dash import Input, Output
 from .model import Model
@@ -182,7 +193,7 @@ class GeneralAnalysis:
     def _render_region_picker(self):
         province_list = self.model.get_province_list()
         return html.Div(
-            className="z-[2] bg-white",
+            className="z-[2] ",
             children=[
                 html.Label(
                     className="label-text font-medium text-gray-700 mb-2 font-bold",

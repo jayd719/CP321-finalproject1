@@ -1,5 +1,5 @@
 """-------------------------------------------------------
-CP321: Assignment 7- App.py
+CP321: Final Project- App.py
 -------------------------------------------------------
 Author:  JD
 ID:      169018282
@@ -44,7 +44,6 @@ app.title = "CP321 Final Project"
 app.layout = [
     html.Div(
         children=[
-            html.Div(id="header"),
             html.Div(
                 className="pt-20 px-5",
                 children=[

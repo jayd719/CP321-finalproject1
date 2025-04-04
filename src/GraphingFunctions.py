@@ -1,3 +1,14 @@
+"""-------------------------------------------------------
+CP321: Final Project GraphingFunctions
+-------------------------------------------------------
+Author:  JD
+ID:      169018282
+Uses:    pandas,numpy,plotly,dash
+Version:  1.0.8
+__updated__ = Sun Mar 30 2025
+-------------------------------------------------------
+"""
+
 import plotly.express as px
 import numpy as np
 

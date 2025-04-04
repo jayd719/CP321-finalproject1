@@ -1,7 +1,11 @@
 function load_static_content() {
-    const header = document.getElementById("header")
+    const header = document.createElement("div")
     const footer = document.getElementById("footer")
+
+    document.body.prepend(header)
+
     document.documentElement.setAttribute("data-theme", "light");
+
     header.className = "navbar bg-base-200 shadow-sm fixed z-10"
     header.innerHTML = `
         <div class="navbar-start">
@@ -27,7 +31,7 @@ function load_static_content() {
                     <label tabindex="0" class="btn btn-outline hover:bg-gray-700 hover:text-white">
                         <i class="fas fa-download mr-2"></i> Export
                     </label>
-                    <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-white rounded-box w-40">
+                    <ul tabindex="0" class="dropdown-content menu p-2 shadow  rounded-box w-40">
                         <li><a><i class="fas fa-file-pdf mr-2 text-red-500"></i> PDF</a></li>
                         <li><a><i class="fas fa-file-excel mr-2 text-green-600"></i> Excel</a></li>
                         <li><a><i class="fas fa-image mr-2 text-blue-500"></i> PNG</a></li>
@@ -52,7 +56,7 @@ function load_static_content() {
         </div>`
 
 
-    footer.className = "mt-20 pt-20 bg-base-200"
+    footer.className = "mt-20 pt-20 bg-base-300"
     footer.id = "footer"
     footer.innerHTML = `<div class="container mx-auto px-2 py-12 scale-[.8]">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -95,9 +99,8 @@ function load_static_content() {
     </div>
 </footer>`
 
-
 }
 
 setTimeout(() => {
     load_static_content()
-}, 300);
+}, 100);
