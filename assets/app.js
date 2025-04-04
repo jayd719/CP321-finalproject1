@@ -24,7 +24,7 @@ function load_static_content() {
         <div class="navbar-end px-5">
             <div class="flex items-center space-x-4 mt-4 md:mt-0">
                 <div class="dropdown dropdown-end">
-                    <label tabindex="0" class="btn btn-sm btn-outline border-gray-100 hover:bg-gray-100">
+                    <label tabindex="0" class="btn btn-outline hover:bg-gray-700 hover:text-white">
                         <i class="fas fa-download mr-2"></i> Export
                     </label>
                     <ul tabindex="0" class="dropdown-content menu p-2 shadow bg-white rounded-box w-40">
@@ -38,7 +38,7 @@ function load_static_content() {
                 <div class="indicator">
                     <span class="indicator-item badge badge-primary badge-xs animate-pulse"></span>
                     <div class="dropdown dropdown-left">
-                        <div tabindex="0" role="button" class="btn btn-sm">
+                        <div tabindex="0" role="button" class="btn btn-outline hover:bg-gray-700 hover:text-white">
                              <i class="fas fa-bell"></i>    
                         </div>
                         <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">

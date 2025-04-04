@@ -3,7 +3,7 @@ from dash import Input, Output
 from .model import Model
 from .GraphingFunctions import create_pie_chart
 
-STAT_CSS = "card shadow-md hover:shadow-xl rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-100"
+STAT_CSS = "card shadow-md hover:shadow-xl rounded-2xl p-6  transition duration-300 border border-gray-100"
 STAT_LABEL = "text-sm font-bold text-primary mb-2"
 STAT_VAL = "text-2xl font-bold text-gray-800 mt-1"
 STAT_COUNT = "text-sm mt-2 text-success"

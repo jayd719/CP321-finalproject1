@@ -14,7 +14,7 @@ class EssentialSevericeDistribution:
 
     def _create_layout(self):
         return html.Div(
-            className="container mx-auto card shadow-md hover:shadow-xl rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-100 my-20",
+            className="container mx-auto card shadow-md hover:shadow-xl rounded-2xl p-6  transition duration-300 border border-gray-100 my-20",
             children=[
                 html.Div(
                     children=[
@@ -70,9 +70,6 @@ class EssentialSevericeDistribution:
         )
 
     def _render_distribution_chart(self):
-        # df = self.model.get_essentails_df_whole()
-        # fig = create_polar_essentails(df)
-        # title = "Distribution of Essential Service Human Resources Across Administrative Units"
         return html.Div(
             className="border p-4 border-gray-100 rounded-xl bg-base-100 col-span-2",
             children=[

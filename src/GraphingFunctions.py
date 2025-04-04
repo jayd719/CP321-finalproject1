@@ -2,7 +2,7 @@ import plotly.express as px
 import numpy as np
 
 
-COLOR_PALLET = px.colors.qualitative.Bold
+COLOR_PALLET = px.colors.qualitative.Safe
 
 
 def add_tilte(fig, title):
@@ -195,7 +195,7 @@ def create_essentials_pie(df):
         values="value",
         names="geo",
         color_discrete_sequence=COLOR_PALLET,
-        hole=0.5,
+        hole=0.0,
         labels={"value": "Count"},
         template="plotly_white",
     )

@@ -17,7 +17,7 @@ class GenderDistribution:
 
     def _create_layout(self):
         return html.Div(
-            className="container mx-auto card shadow-md hover:shadow-xl rounded-2xl p-6 hover:scale-[1.01] transition duration-300 border border-gray-100 my-20",
+            className="container mx-auto card shadow-md hover:shadow-xl rounded-2xl p-6  transition duration-300 border border-gray-100 my-20",
             children=[
                 self._render_field_selector(),
                 html.Div(
