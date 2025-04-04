@@ -9,7 +9,7 @@ __updated__ = Sun Mar 30 2025
 -------------------------------------------------------
 """
 
-from dash import dcc, html, dash_table
+from dash import html
 
 
 def render_dashboard_header():
