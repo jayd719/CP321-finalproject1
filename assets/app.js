@@ -97,6 +97,5 @@ function load_static_content() {
 
 }
 
-setTimeout(() => {
-    load_static_content()
-}, 100);
+
+load_static_content()
