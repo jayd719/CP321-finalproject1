@@ -12,6 +12,8 @@ __updated__ = Sun Mar 30 2025
 JS_SCRIPTS = [
     "https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4",
     "assets/app.js",
+    "assets/cookieContent.js",
+    "assets/popUp.js",
 ]
 SYTLE_SHEETS = [
     "https://cdn.jsdelivr.net/npm/daisyui@5",
